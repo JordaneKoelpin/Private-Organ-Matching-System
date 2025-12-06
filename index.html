@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Organ Matching Platform</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🫀</text></svg>">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1 class="logo">🫀 PrivateOrgan</h1>
+                <div class="header-stats" id="headerStats">
+                    <div class="stat">
+                        <span class="stat-number" id="donorCount">-</span>
+                        <span class="stat-label">Active Donors</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number" id="recipientCount">-</span>
+                        <span class="stat-label">Recipients</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number" id="matchCount">-</span>
+                        <span class="stat-label">Total Matches</span>
+                    </div>
+                </div>
+                <button class="wallet-btn" id="connectWallet">Connect Wallet</button>
+            </div>
+        </header>
+
+        <main class="main">
+            <div class="hero">
+                <h2>Privacy-Preserving Organ Matching</h2>
+                <p>A secure platform using advanced encryption to match organ donors and recipients while protecting sensitive medical data</p>
+            </div>
+
+            <div class="contract-notice" id="contractNotice">
+                <div class="notice-content">
+                    <span class="notice-icon">⚠️</span>
+                    <div class="notice-text">
+                        <strong>Contract Setup Required:</strong>
+                        Please deploy the PrivacyOrganMatching smart contract and update CONTRACT_ADDRESS in script.js to enable full functionality.
+                    </div>
+                </div>
+            </div>
+
+            <div class="wallet-status" id="walletStatus" style="display: none;">
+                <div class="status-card">
+                    <div class="status-info">
+                        <span class="status-label">Connected:</span>
+                        <span class="status-address" id="walletAddress"></span>
+                    </div>
+                    <div class="network-info">
+                        <span class="network-label">Network:</span>
+                        <span class="network-name" id="networkName">Sepolia</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-tabs">
+                <div class="tab-header">
+                    <button class="tab-btn active" data-tab="donor">Register as Donor</button>
+                    <button class="tab-btn" data-tab="recipient">Register as Recipient</button>
+                    <button class="tab-btn" data-tab="hospital">Hospital Functions</button>
+                    <button class="tab-btn" data-tab="view">View Data</button>
+                </div>
+
+                <div class="tab-content">
+                    <!-- Donor Registration -->
+                    <div class="tab-panel active" id="donor-panel">
+                        <div class="form-card">
+                            <h3>🫁 Register as Organ Donor</h3>
+                            <p class="form-description">Your medical data will be encrypted and stored securely on the blockchain</p>
+
+                            <form class="registration-form" id="donorForm">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="donorAge">Age</label>
+                                        <input type="number" id="donorAge" min="18" max="80" required>
+                                        <span class="form-help">Must be 18-80 years old</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="donorBloodType">Blood Type</label>
+                                        <select id="donorBloodType" required>
+                                            <option value="">Select blood type</option>
+                                            <option value="0">O</option>
+                                            <option value="1">A</option>
+                                            <option value="2">B</option>
+                                            <option value="3">AB</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="donorOrganType">Organ Type</label>
+                                        <select id="donorOrganType" required>
+                                            <option value="">Select organ</option>
+                                            <option value="0">Heart</option>
+                                            <option value="1">Liver</option>
+                                            <option value="2">Kidney</option>
+                                            <option value="3">Lung</option>
+                                            <option value="4">Pancreas</option>
+                                            <option value="5">Intestine</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="donorHLA">HLA Type</label>
+                                        <input type="number" id="donorHLA" min="0" max="65535" required>
+                                        <span class="form-help">HLA compatibility markers</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="donorUrgency">Medical Urgency Score</label>
+                                    <input type="number" id="donorUrgency" min="0" max="100" required>
+                                    <span class="form-help">0-100 (higher = more urgent)</span>
+                                </div>
+
+                                <button type="submit" class="submit-btn">Register as Donor</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Recipient Registration -->
+                    <div class="tab-panel" id="recipient-panel">
+                        <div class="form-card">
+                            <h3>❤️ Register as Organ Recipient</h3>
+                            <p class="form-description">Your medical data will be encrypted and stored securely on the blockchain</p>
+
+                            <form class="registration-form" id="recipientForm">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="recipientAge">Age</label>
+                                        <input type="number" id="recipientAge" min="1" max="80" required>
+                                        <span class="form-help">Must be 1-80 years old</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="recipientBloodType">Blood Type</label>
+                                        <select id="recipientBloodType" required>
+                                            <option value="">Select blood type</option>
+                                            <option value="0">O</option>
+                                            <option value="1">A</option>
+                                            <option value="2">B</option>
+                                            <option value="3">AB</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="recipientOrganType">Needed Organ</label>
+                                        <select id="recipientOrganType" required>
+                                            <option value="">Select organ needed</option>
+                                            <option value="0">Heart</option>
+                                            <option value="1">Liver</option>
+                                            <option value="2">Kidney</option>
+                                            <option value="3">Lung</option>
+                                            <option value="4">Pancreas</option>
+                                            <option value="5">Intestine</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="recipientHLA">HLA Type</label>
+                                        <input type="number" id="recipientHLA" min="0" max="65535" required>
+                                        <span class="form-help">HLA compatibility markers</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="recipientUrgency">Medical Urgency Score</label>
+                                        <input type="number" id="recipientUrgency" min="0" max="100" required>
+                                        <span class="form-help">0-100 (higher = more urgent)</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="recipientWaitTime">Wait Time (months)</label>
+                                        <input type="number" id="recipientWaitTime" min="0" max="240" required>
+                                        <span class="form-help">Time on waiting list (max 20 years)</span>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="submit-btn">Register as Recipient</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Hospital Functions -->
+                    <div class="tab-panel" id="hospital-panel">
+                        <div class="form-card">
+                            <h3>🏥 Hospital Management Functions</h3>
+                            <p class="form-description">Functions available only to authorized hospital staff</p>
+
+                            <div class="hospital-actions">
+                                <div class="action-group">
+                                    <h4>Initiate Matching Process</h4>
+                                    <form id="matchingForm">
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="donorAddress">Donor Address</label>
+                                                <input type="text" id="donorAddress" placeholder="0x..." required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="recipientAddress">Recipient Address</label>
+                                                <input type="text" id="recipientAddress" placeholder="0x..." required>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="submit-btn">Initiate Matching</button>
+                                    </form>
+                                </div>
+
+                                <div class="action-group">
+                                    <h4>Transfer Hospital Authority</h4>
+                                    <form id="transferForm">
+                                        <div class="form-group">
+                                            <label for="newHospitalAddress">New Hospital Address</label>
+                                            <input type="text" id="newHospitalAddress" placeholder="0x..." required>
+                                        </div>
+                                        <button type="submit" class="submit-btn">Transfer Authority</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- View Data -->
+                    <div class="tab-panel" id="view-panel">
+                        <div class="view-section">
+                            <h3>📊 System Data</h3>
+
+                            <div class="data-cards">
+                                <div class="data-card">
+                                    <h4>Match Results</h4>
+                                    <div class="match-lookup">
+                                        <div class="form-group">
+                                            <label for="matchId">Match ID</label>
+                                            <input type="number" id="matchId" placeholder="Enter match ID">
+                                        </div>
+                                        <button onclick="getMatchResult()" class="submit-btn">Get Match Details</button>
+                                    </div>
+                                    <div id="matchDetails" class="result-display"></div>
+                                </div>
+
+                                <div class="data-card">
+                                    <h4>Profile Management</h4>
+                                    <div class="profile-actions">
+                                        <button onclick="updateUrgencyScore()" class="action-btn">Update Urgency Score</button>
+                                        <button onclick="deactivateProfile(true)" class="action-btn danger">Deactivate Donor Profile</button>
+                                        <button onclick="deactivateProfile(false)" class="action-btn danger">Deactivate Recipient Profile</button>
+                                    </div>
+                                </div>
+
+                                <div class="data-card">
+                                    <h4>System Statistics</h4>
+                                    <div id="systemStats" class="stats-display">
+                                        <div class="stat-item">
+                                            <span class="stat-label">Total Donors:</span>
+                                            <span class="stat-value" id="totalDonors">-</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span class="stat-label">Total Recipients:</span>
+                                            <span class="stat-value" id="totalRecipients">-</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span class="stat-label">Total Matches:</span>
+                                            <span class="stat-value" id="totalMatches">-</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span class="stat-label">Last Match:</span>
+                                            <span class="stat-value" id="lastMatch">-</span>
+                                        </div>
+                                    </div>
+                                    <button onclick="refreshStats()" class="submit-btn">Refresh Statistics</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <div class="toast" id="toast"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <script>
+        // Fallback CDN for ethers.js if primary fails
+        if (typeof ethers === 'undefined') {
+            document.write('<script src="https://unpkg.com/ethers@5.7.2/dist/ethers.umd.min.js"><\/script>');
+        }
+    </script>
+    <script>
+        // Second fallback
+        if (typeof ethers === 'undefined') {
+            document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"><\/script>');
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
